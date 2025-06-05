@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartStock-AI", "SmartStock-AI\SmartStock-AI.csproj", "{FDDDB892-6008-4FB1-8E7F-1E972D01392E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartStock-AI.Application", "SmartStock-AI.Application\SmartStock-AI.Application.csproj", "{8E3D7EB5-9161-4CCF-808B-F10D59A13EA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartStock-AI.Domain", "SmartStock-AI.Domain\SmartStock-AI.Domain.csproj", "{BC8DB9AB-95D4-48AB-B056-82D4B6DB80A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartStock-AI.Infrastructure", "SmartStock-AI.Infrastructure\SmartStock-AI.Infrastructure.csproj", "{094EFD74-58C9-4805-88DA-B78BE197477A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FDDDB892-6008-4FB1-8E7F-1E972D01392E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDDDB892-6008-4FB1-8E7F-1E972D01392E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDDDB892-6008-4FB1-8E7F-1E972D01392E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDDDB892-6008-4FB1-8E7F-1E972D01392E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E3D7EB5-9161-4CCF-808B-F10D59A13EA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E3D7EB5-9161-4CCF-808B-F10D59A13EA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E3D7EB5-9161-4CCF-808B-F10D59A13EA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E3D7EB5-9161-4CCF-808B-F10D59A13EA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC8DB9AB-95D4-48AB-B056-82D4B6DB80A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC8DB9AB-95D4-48AB-B056-82D4B6DB80A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC8DB9AB-95D4-48AB-B056-82D4B6DB80A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC8DB9AB-95D4-48AB-B056-82D4B6DB80A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{094EFD74-58C9-4805-88DA-B78BE197477A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{094EFD74-58C9-4805-88DA-B78BE197477A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{094EFD74-58C9-4805-88DA-B78BE197477A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{094EFD74-58C9-4805-88DA-B78BE197477A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
