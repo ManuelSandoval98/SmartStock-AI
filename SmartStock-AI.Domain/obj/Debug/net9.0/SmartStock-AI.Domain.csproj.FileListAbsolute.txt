@@ -1,0 +1,12 @@
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Domain/bin/Debug/net9.0/SmartStock-AI.Domain.deps.json
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Domain/bin/Debug/net9.0/SmartStock-AI.Domain.dll
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Domain/bin/Debug/net9.0/SmartStock-AI.Domain.pdb
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Domain/obj/Debug/net9.0/SmartStock-AI.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Domain/obj/Debug/net9.0/SmartStock-AI.Domain.AssemblyInfoInputs.cache
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Domain/obj/Debug/net9.0/SmartStock-AI.Domain.AssemblyInfo.cs
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Domain/obj/Debug/net9.0/SmartStock-AI.Domain.csproj.CoreCompileInputs.cache
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Domain/obj/Debug/net9.0/SmartStock-AI.Domain.sourcelink.json
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Domain/obj/Debug/net9.0/SmartStock-AI.Domain.dll
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Domain/obj/Debug/net9.0/refint/SmartStock-AI.Domain.dll
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Domain/obj/Debug/net9.0/SmartStock-AI.Domain.pdb
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Domain/obj/Debug/net9.0/ref/SmartStock-AI.Domain.dll

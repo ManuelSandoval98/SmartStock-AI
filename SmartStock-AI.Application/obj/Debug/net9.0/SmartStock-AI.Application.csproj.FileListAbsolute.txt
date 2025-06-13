@@ -1,0 +1,16 @@
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/bin/Debug/net9.0/SmartStock-AI.Application.deps.json
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/bin/Debug/net9.0/SmartStock-AI.Application.dll
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/bin/Debug/net9.0/SmartStock-AI.Application.pdb
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/obj/Debug/net9.0/SmartStock-AI.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/obj/Debug/net9.0/SmartStock-AI.Application.AssemblyInfoInputs.cache
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/obj/Debug/net9.0/SmartStock-AI.Application.AssemblyInfo.cs
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/obj/Debug/net9.0/SmartStock-AI.Application.csproj.CoreCompileInputs.cache
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/obj/Debug/net9.0/SmartStock-AI.Application.sourcelink.json
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/obj/Debug/net9.0/SmartStock-AI.Application.dll
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/obj/Debug/net9.0/refint/SmartStock-AI.Application.dll
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/obj/Debug/net9.0/SmartStock-AI.Application.pdb
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/obj/Debug/net9.0/ref/SmartStock-AI.Application.dll
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/bin/Debug/net9.0/SmartStock-AI.Domain.dll
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/bin/Debug/net9.0/SmartStock-AI.Domain.pdb
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/obj/Debug/net9.0/SmartStock-AI.Application.csproj.AssemblyReference.cache
+/Users/robertoflores/RiderProjects/SmartStock-AI/SmartStock-AI.Application/obj/Debug/net9.0/SmartSto.69ADECA7.Up2Date
