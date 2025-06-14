@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using SmartStock_AI.Application.Authentication.Interfaces;
 using SmartStock_AI.Infrastructure.Infrastructure.Persistence.Admin;
-using SmartStock_AI.Infrastructure.Infrastructure.Persistence.Admin.Entities;
+using SmartStock_AI.Application.Authentication.Interfaces;
+using SmartStock_AI.Domain.Authentication.Entities;
 
 namespace SmartStock_AI.Infrastructure.Authentication.Repositories;
 
@@ -16,13 +16,30 @@ public class NegocioLoginTrackingRepository : INegocioLoginTrackingRepository
 
     public async Task<NegocioLoginTracking?> GetByCorreoAsync(string correo)
     {
-        return await _context.NegocioLoginTracking
+        var entity = await _context.NegocioLoginTracking
             .FirstOrDefaultAsync(t => t.CorreoAdmin == correo);
+
+        if (entity == null) return null;
+
+        return new NegocioLoginTracking
+        {
+            Id = entity.Id,
+            CorreoAdmin = entity.CorreoAdmin,
+            IntentosFallidos = entity.IntentosFallidos,
+            BloqueadoHasta = entity.BloqueadoHasta
+        };
     }
 
     public async Task AddAsync(NegocioLoginTracking tracking)
     {
-        await _context.NegocioLoginTracking.AddAsync(tracking);
+        var entity = new NegocioLoginTracking
+        {
+            CorreoAdmin = tracking.CorreoAdmin,
+            IntentosFallidos = tracking.IntentosFallidos,
+            BloqueadoHasta = tracking.BloqueadoHasta
+        };
+
+        await _context.NegocioLoginTracking.AddAsync(entity);
     }
 
     public async Task SaveChangesAsync()

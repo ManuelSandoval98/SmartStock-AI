@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using SmartStock_AI.Infrastructure.Infrastructure.Persistence.Admin.Entities;
+using NegocioLoginTracking = SmartStock_AI.Domain.Authentication.Entities.NegocioLoginTracking;
 
 namespace SmartStock_AI.Infrastructure.Infrastructure.Persistence.Admin;
 
@@ -18,7 +19,7 @@ public partial class AdminDbContext : DbContext
 
     public virtual DbSet<Adminlogs> Adminlogs { get; set; }
 
-    public virtual DbSet<NegocioLoginTracking> NegocioLoginTracking { get; set; }
+    public virtual DbSet<Domain.Authentication.Entities.NegocioLoginTracking> NegocioLoginTracking { get; set; }
 
     public virtual DbSet<Domain.Authentication.Entities.Negocio> Negocios { get; set; }
 
@@ -81,9 +82,6 @@ public partial class AdminDbContext : DbContext
             entity.HasIndex(e => e.CorreoAdmin, "negocios_correo_admin_key").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Bloqueadohasta)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("bloqueadohasta");
             entity.Property(e => e.CorreoAdmin)
                 .HasMaxLength(150)
                 .HasColumnName("correo_admin");
@@ -97,9 +95,6 @@ public partial class AdminDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("fecha_creacion");
-            entity.Property(e => e.Intentosfallidos)
-                .HasDefaultValue(0)
-                .HasColumnName("intentosfallidos");
             entity.Property(e => e.NombreComercial)
                 .HasMaxLength(150)
                 .HasColumnName("nombre_comercial");

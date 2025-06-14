@@ -1,5 +1,6 @@
 using MediatR;
 using SmartStock_AI.Application.UnitOfWork;
+using SmartStock_AI.Application.UnitOfWork.Negocio;
 using SmartStock_AI.Domain.Products.Entities;
 
 namespace SmartStock_AI.Application.Products.Commands;
@@ -18,15 +19,8 @@ public record CreateProductCommand(
     DateTime? FechaEgreso,
     DateTime? FechaExpiracion): IRequest<int>;
     
-public class CreateProductHandler : IRequestHandler<CreateProductCommand, int>
+public class CreateProductHandler(INegocioUnitOfWork _negocioUnitOfWork) : IRequestHandler<CreateProductCommand, int>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public CreateProductHandler(IUnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork;
-    }
-
     public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         var producto = new Producto
@@ -40,13 +34,18 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, int>
             PrecioVenta = request.PrecioVenta,
             PrecioCompra = request.PrecioCompra,
             PrecioDescuento = request.PrecioDescuento,
-            FechaIngreso = request.FechaIngreso?.ToUniversalTime(),
-            FechaEgreso = request.FechaEgreso?.ToUniversalTime(),
-            FechaExpiracion = request.FechaExpiracion?.ToUniversalTime()
+            FechaIngreso = request.FechaIngreso.HasValue?DateTime.SpecifyKind(request.FechaIngreso.Value, DateTimeKind.Unspecified)
+                : null,
+            FechaEgreso = request.FechaEgreso.HasValue
+                ? DateTime.SpecifyKind(request.FechaEgreso.Value, DateTimeKind.Unspecified)
+                : null,
+            FechaExpiracion = request.FechaExpiracion.HasValue
+                ? DateTime.SpecifyKind(request.FechaExpiracion.Value, DateTimeKind.Unspecified)
+                : null,
         };
 
-        await _unitOfWork.ProductRepository.AddAsync(producto);
-        await _unitOfWork.SaveChangesAsync();
+        await _negocioUnitOfWork.ProductRepository.AddAsync(producto);
+        await _negocioUnitOfWork.SaveChangesAsync();
 
         return producto.Id;
     }

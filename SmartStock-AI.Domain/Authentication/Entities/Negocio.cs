@@ -19,8 +19,4 @@ public class Negocio
     public bool Estado { get; set; }
     [Column("fecha_creacion")]
     public DateTime FechaCreacion { get; set; }
-    [Column("intentosfallidos")]
-    public int IntentosFallidos { get; set; } = 0;
-    [Column("bloqueadohasta")]
-    public DateTime? BloqueadoHasta { get; set; }
 }

@@ -1,23 +1,17 @@
 using MediatR;
 using SmartStock_AI.Application.Products.DTOs;
 using SmartStock_AI.Application.UnitOfWork;
+using SmartStock_AI.Application.UnitOfWork.Negocio;
 
 namespace SmartStock_AI.Application.Products.Queries;
 
 public record GetAllProductsQuery() : IRequest<List<ProductDto>>;
 
-public class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, List<ProductDto>>
+public class GetAllProductsHandler(INegocioUnitOfWork _negocioUnitOfWork) : IRequestHandler<GetAllProductsQuery, List<ProductDto>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public GetAllProductsHandler(IUnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork;
-    }
-
     public async Task<List<ProductDto>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
     {
-        var productos = await _unitOfWork.ProductRepository.GetAllWithCategoryAsync();
+        var productos = await _negocioUnitOfWork.ProductRepository.GetAllWithCategoryAsync();
 
         var productDtos = productos.Select(p => new ProductDto
         {

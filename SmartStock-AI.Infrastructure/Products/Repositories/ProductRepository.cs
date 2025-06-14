@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SmartStock_AI.Application.Common.Interfaces;
 using SmartStock_AI.Application.Products.DTOs;
 using SmartStock_AI.Application.Products.Interfaces;
 using SmartStock_AI.Domain.Categories.Entities;
@@ -9,9 +10,9 @@ namespace SmartStock_AI.Infrastructure.Products.Repositories;
 
 public class ProductRepository : IProductRepository
 {
-    private readonly NegocioDbContext _context;
+    private readonly INegocioDbContext _context;
 
-    public ProductRepository(NegocioDbContext context)
+    public ProductRepository(INegocioDbContext context)
     {
         _context = context;
     }
@@ -37,6 +38,4 @@ public class ProductRepository : IProductRepository
     {
         _context.Productos.Remove(producto);
     }
-
-
 }

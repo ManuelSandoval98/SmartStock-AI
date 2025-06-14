@@ -1,5 +1,6 @@
 using MediatR;
 using SmartStock_AI.Application.UnitOfWork;
+using SmartStock_AI.Application.UnitOfWork.Negocio;
 
 namespace SmartStock_AI.Application.Products.Commands;
 
@@ -16,18 +17,11 @@ public record UpdateProductCommand(int Id,
     DateTime? FechaIngreso,
     DateTime? FechaEgreso, 
     DateTime? FechaExpiracion) : IRequest<Unit>;
-public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Unit>
+public class UpdateProductHandler(INegocioUnitOfWork _negocioUnitOfWork) : IRequestHandler<UpdateProductCommand, Unit>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public UpdateProductHandler(IUnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork;
-    }
-
     public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        var producto = await _unitOfWork.ProductRepository.GetByIdAsync(request.Id);
+        var producto = await _negocioUnitOfWork.ProductRepository.GetByIdAsync(request.Id);
 
         if (producto == null)
             throw new Exception("Producto no encontrado.");
@@ -45,7 +39,7 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Unit>
         producto.FechaEgreso = request.FechaEgreso?.ToUniversalTime();
         producto.FechaExpiracion = request.FechaExpiracion?.ToUniversalTime();
 
-        await _unitOfWork.SaveChangesAsync();
+        await _negocioUnitOfWork.SaveChangesAsync();
         return Unit.Value;
     }
 }

@@ -6,7 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SmartStock_AI.Application.Authentication.DTOs;
 using SmartStock_AI.Application.Authentication.Interfaces;
+using SmartStock_AI.Application.Common.Interfaces;
 using SmartStock_AI.Application.UnitOfWork;
+using SmartStock_AI.Application.UnitOfWork.Admin;
 using SmartStock_AI.Domain;
 using SmartStock_AI.Domain.Authentication.Entities;
 using SmartStock_AI.Infrastructure.Authentication.Repositories;
@@ -14,7 +16,9 @@ using SmartStock_AI.Infrastructure.Helpers;
 using SmartStock_AI.Infrastructure.Infrastructure.Persistence.Admin;
 using SmartStock_AI.Infrastructure.Infrastructure.Persistence.Admin.Entities;
 using SmartStock_AI.Infrastructure.UnitOfWork;
+using SmartStock_AI.Infrastructure.UnitOfWork.Negocio;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
+using NegocioLoginTracking = SmartStock_AI.Domain.Authentication.Entities.NegocioLoginTracking;
 
 namespace SmartStock_AI.Infrastructure.Authentication.Services;
 
@@ -22,20 +26,22 @@ public class AuthService : IAuthService
 {
         private readonly DatabaseCloneService _databaseCloneService;
         private readonly IConfiguration _configuration;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAdminUnitOfWork _adminUnitOfWork;
         private readonly INegocioLoginTrackingRepository _trackingRepository;
-        public AuthService(IUnitOfWork unitOfWork, IConfiguration configuration, DatabaseCloneService databaseCloneService, INegocioLoginTrackingRepository trackingRepository)
+        private readonly INegocioDbContextFactory _negocioDbContextFactory;
+        public AuthService(IAdminUnitOfWork adminUnitOfWork,IConfiguration configuration, INegocioDbContextFactory negocioDbContextFactory, DatabaseCloneService databaseCloneService, INegocioLoginTrackingRepository trackingRepository)
         {
-            _unitOfWork = unitOfWork;
+            _adminUnitOfWork = adminUnitOfWork;
             _configuration = configuration;
             _trackingRepository = trackingRepository;
+            _negocioDbContextFactory = negocioDbContextFactory;
             _databaseCloneService = databaseCloneService;
         }
 
         public async Task<AuthResponseDto> LoginAsync(LoginRequestDto loginRequest)
         {
             // 1️⃣ Verificar si el negocio existe
-            var negocio = await _unitOfWork.NegocioRepository.GetByCorreoAsync(loginRequest.CorreoAdmin);
+            var negocio = await _adminUnitOfWork.NegocioRepository.GetByCorreoAsync(loginRequest.CorreoAdmin);
             if (negocio == null)
                 throw new UnauthorizedAccessException("El correo no está registrado a ninguna cuenta.");
 
@@ -79,7 +85,7 @@ public class AuthService : IAuthService
                     throw new UnauthorizedAccessException("Has excedido el número de intentos. Tu cuenta está bloqueada por 15 minutos.");
                 else
                 {
-                    int intentosRestantes = 3 - (tracking.IntentosFallidos ?? 0);
+                    int intentosRestantes = 3 - (tracking.IntentosFallidos);
                     throw new UnauthorizedAccessException($"Contraseña incorrecta. Te quedan {intentosRestantes} intento(s).");
                 }
             }
@@ -88,6 +94,15 @@ public class AuthService : IAuthService
             tracking.IntentosFallidos = 0;
             tracking.BloqueadoHasta = null;
             await _trackingRepository.SaveChangesAsync();
+            
+            // 🔥 Crear el contexto del negocio dinámicamente con la BD asignada
+            string connectionString = $"Host=localhost;Database={negocio.DbAsociada};Username=robertoflores;Password=302630";
+            var negocioDbContext = _negocioDbContextFactory.CreateDbContext(connectionString);
+            
+            INegocioDbContext negocioContext = negocioDbContext;
+            var negocioUnitOfWork = new NegocioUnitOfWork(negocioContext);
+            // 🔹 Verificar si funciona (opcional, debug/test)
+            var categorias = await negocioUnitOfWork.CategoryRepository.GetAllAsync();
 
             // 🔥 Login exitoso
             var token = GenerateJwtToken(negocio);
@@ -102,11 +117,11 @@ public class AuthService : IAuthService
     
         public async Task<AuthResponseDto> RegisterAsync(RegisterRequestDto registerRequest)
         {
-            var existingNegocio = await _unitOfWork.NegocioRepository.GetByCorreoAsync(registerRequest.CorreoAdmin);
+            var existingNegocio = await _adminUnitOfWork.NegocioRepository.GetByCorreoAsync(registerRequest.CorreoAdmin);
             if (existingNegocio != null)
                 throw new InvalidOperationException("El correo ya está registrado.");
 
-            var existingNombre = await _unitOfWork.NegocioRepository.GetByNombreComercialAsync(registerRequest.NombreComercial);
+            var existingNombre = await _adminUnitOfWork.NegocioRepository.GetByNombreComercialAsync(registerRequest.NombreComercial);
             if (existingNombre != null)
                 throw new InvalidOperationException("El nombre comercial ya está registrado.");
 
@@ -119,11 +134,11 @@ public class AuthService : IAuthService
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerRequest.Password),
                 DbAsociada = $"db_{cleanDbName}",
                 Estado = true,
-                FechaCreacion = DateTime.Now
+                FechaCreacion = DateTime.UtcNow
             };
 
-            await _unitOfWork.NegocioRepository.AddAsync(nuevoNegocio);
-            await _unitOfWork.SaveChangesAsync();
+            await _adminUnitOfWork.NegocioRepository.AddAsync(nuevoNegocio);
+            await _adminUnitOfWork.SaveChangesAsync();
 
             _databaseCloneService.CloneDatabaseFromTemplate(nuevoNegocio.DbAsociada);
 
@@ -149,6 +164,7 @@ public class AuthService : IAuthService
                 new Claim(JwtRegisteredClaimNames.Sub, negocio.CorreoAdmin),
                 new Claim("NegocioId", negocio.Id.ToString()),
                 new Claim("NombreComercial", negocio.NombreComercial),
+                new Claim("DbAsociada", negocio.DbAsociada),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

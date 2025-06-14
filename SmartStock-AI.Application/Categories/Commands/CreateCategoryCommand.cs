@@ -1,13 +1,14 @@
 using MediatR;
 using SmartStock_AI.Application.Categories.DTOs;
 using SmartStock_AI.Application.UnitOfWork;
+using SmartStock_AI.Application.UnitOfWork.Negocio;
 using SmartStock_AI.Domain.Categories.Entities;
 
 namespace SmartStock_AI.Application.Categories.Commands;
 
 public record CreateCategoryCommand(string Nombre) : IRequest<CategoryDto>;
 
-public class CreateCategoryHandler(IUnitOfWork _unitOfWork) : IRequestHandler<CreateCategoryCommand, CategoryDto>
+public class CreateCategoryHandler(INegocioUnitOfWork _negocioUnitOfWork) : IRequestHandler<CreateCategoryCommand, CategoryDto>
 {
     public async Task<CategoryDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
@@ -18,8 +19,8 @@ public class CreateCategoryHandler(IUnitOfWork _unitOfWork) : IRequestHandler<Cr
         };
 
         // Guardar usando UnitOfWork
-        await _unitOfWork.CategoryRepository.AddAsync(nuevaCategoria);
-        await _unitOfWork.SaveChangesAsync();
+        await _negocioUnitOfWork.CategoryRepository.AddAsync(nuevaCategoria);
+        await _negocioUnitOfWork.SaveChangesAsync();
 
         // Retornar DTO
         return new CategoryDto

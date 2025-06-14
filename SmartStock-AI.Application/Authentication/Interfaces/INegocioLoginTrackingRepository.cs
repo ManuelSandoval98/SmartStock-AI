@@ -1,6 +1,6 @@
-using SmartStock_AI.Infrastructure.Infrastructure.Persistence.Admin.Entities;
+using SmartStock_AI.Domain.Authentication.Entities;
 
-namespace SmartStock_AI.Infrastructure.Authentication.Repositories;
+namespace SmartStock_AI.Application.Authentication.Interfaces;
 
 public interface INegocioLoginTrackingRepository
 {

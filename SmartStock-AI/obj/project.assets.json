@@ -632,6 +632,7 @@
         "dependencies": {
           "MediatR": "12.5.0",
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0",
+          "Microsoft.EntityFrameworkCore": "9.0.5",
           "SmartStock-AI.Domain": "1.0.0"
         },
         "compile": {

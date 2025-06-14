@@ -1,6 +1,7 @@
 using MediatR;
 using SmartStock_AI.Application.Products.Requests;
 using SmartStock_AI.Application.UnitOfWork;
+using SmartStock_AI.Application.UnitOfWork.Negocio;
 
 namespace SmartStock_AI.Application.Products.Commands;
 
@@ -18,18 +19,11 @@ public record PatchProductCommand(
     DateTime? FechaExpiracion
 ) : IRequest<Unit>;
 
-public class PatchProductHandler : IRequestHandler<PatchProductRequest, Unit>
+public class PatchProductHandler(INegocioUnitOfWork _negocioUnitOfWork) : IRequestHandler<PatchProductRequest, Unit>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public PatchProductHandler(IUnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork;
-    }
-
     public async Task<Unit> Handle(PatchProductRequest request, CancellationToken cancellationToken)
     {
-        var producto = await _unitOfWork.ProductRepository.GetByIdAsync(request.Id);
+        var producto = await _negocioUnitOfWork.ProductRepository.GetByIdAsync(request.Id);
         if (producto == null)
             throw new KeyNotFoundException("Producto no encontrado");
 
@@ -47,7 +41,7 @@ public class PatchProductHandler : IRequestHandler<PatchProductRequest, Unit>
         if (data.FechaEgreso.HasValue) producto.FechaEgreso = data.FechaEgreso.Value.ToUniversalTime();
         if (data.FechaExpiracion.HasValue) producto.FechaExpiracion = data.FechaExpiracion.Value.ToUniversalTime();
 
-        await _unitOfWork.SaveChangesAsync();
+        await _negocioUnitOfWork.SaveChangesAsync();
         return Unit.Value;
     }
 }

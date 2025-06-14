@@ -19,10 +19,6 @@ public partial class Negocios
 
     public DateTime? FechaCreacion { get; set; }
 
-    public int? Intentosfallidos { get; set; }
-
-    public DateTime? Bloqueadohasta { get; set; }
-
     public virtual ICollection<Adminlogs> Adminlogs { get; set; } = new List<Adminlogs>();
 
     public virtual ICollection<Sesiones> Sesiones { get; set; } = new List<Sesiones>();
