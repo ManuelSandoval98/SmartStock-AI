@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartStock-AI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d55106b940a4df8f38be203e5bb297aadf3895be")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartStock-AI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartStock-AI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
